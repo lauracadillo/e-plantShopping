@@ -37,7 +37,7 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleIncrement = (item) => {
     dispatch(updateQuantity({
-      id: item.id,
+      name: item.name, 
       quantity: item.quantity + 1
     }));
   };
@@ -45,18 +45,17 @@ const CartItem = ({ onContinueShopping }) => {
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
       dispatch(updateQuantity({
-        id: item.id,
+        name: item.name, 
         quantity: item.quantity - 1
       }));
     } else {
-      dispatch(removeItem(item.id));
-    }
+      dispatch(removeItem(item.name));     }
   };
-
+  
   const handleRemove = (item) => {
-    dispatch(removeItem(item.id));
+    dispatch(removeItem(item.name)); // ✅ use name instead of id
   };
-
+  
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
     // Extract the numeric value from the cost string
@@ -71,7 +70,7 @@ const CartItem = ({ onContinueShopping }) => {
 
   return (
     <div className="cart-container">
-      <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
+      <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount(cart)}</h2>
       <div>
         {cart.map(item => (
           <div className="cart-item" key={item.name}>
